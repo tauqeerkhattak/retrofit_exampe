@@ -1,10 +1,5 @@
 name: Android CI
 
-defaults:
-  run:
-    working-directory: android
-
-
 env:
   main_project_module: app
 
@@ -33,18 +28,25 @@ jobs:
         uses: actions/setup-java@v1
         with:
           java-version: 11
+          cache: "gradle"
 
-      - name: Change wrapper permissions
-        run: chmod +x ./gradlew
+      - name: Set Up Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: "3.7.7"
+          channel: "stable"
+          cache: true
 
-      # Run Tests Build
-      - name: Run gradle tests
-        run: ./gradlew test
+      - name: Get Dependencies
+        run: flutter pub get
 
-      # Run Build Project
-      - name: Build gradle project
-        run: ./gradlew build
+      - name: Build APK
+        run: flutter build apk --release
 
-      # Create APK Debug
-      - name: Build apk debug project (APK) - ${{ env.main_project_module }} module
-        run: ./gradlew assembleDebug
+      # Upload Artifact Build
+      # Noted For Output [main_project_module]/build/outputs/apk/debug/
+      - name: Upload APK Debug - ${{ env.repository_name }}
+        uses: actions/upload-artifact@v2
+        with:
+          name: ${{ env.date_today }} - ${{ env.repository_name }} - APK(s) debug generated
+          path: ${{ env.main_project_module }}/build/outputs/apk/debug/
