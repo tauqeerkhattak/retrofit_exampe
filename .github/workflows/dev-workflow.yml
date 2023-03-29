@@ -1,6 +1,9 @@
 name: Android CI
 
-working-directory: android
+defaults:
+  run:
+    working-directory: scripts
+
 
 env:
   main_project_module: app
