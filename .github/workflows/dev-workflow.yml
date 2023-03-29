@@ -2,7 +2,7 @@ name: Android CI
 
 defaults:
   run:
-    working-directory: scripts
+    working-directory: android
 
 
 env:
