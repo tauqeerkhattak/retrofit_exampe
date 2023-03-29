@@ -1,7 +1,9 @@
 name: Android CI
 
+working-directory: android
+
 env:
-  main_project_module: android/app
+  main_project_module: app
 
 on:
   push:
