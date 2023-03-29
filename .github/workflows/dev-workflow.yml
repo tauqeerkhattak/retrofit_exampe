@@ -24,9 +24,6 @@ jobs:
       - name: Set repository name as env variable
         run: echo "repository_name=$(echo '${{ github.repository }}' | awk -F '/' '{print $2}')" >> $GITHUB_ENV
 
-      - name: Go to android folder
-        run: cd android
-
       - name: Set Up JDK
         uses: actions/setup-java@v1
         with:
